@@ -121,7 +121,7 @@ de:
         one: Kontakt
       group/ortsgruppe_leiterrunde/leiter:
         one: Leiter*in
-        
+
       ### EVENTS
       event/role/teamer:
         one: Teamer*in
@@ -131,3 +131,8 @@ de:
         one: Helfer*in
       event/role/participant:
         one: Teilnehmer*in
+
+    attributes:
+      group:
+        members_normal: normale Mitglieder
+        members_discounted: vergünstigte Mitglieder
