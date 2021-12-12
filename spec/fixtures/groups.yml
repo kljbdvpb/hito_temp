@@ -3,17 +3,226 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_kljb.
 
-
 root:
   parent:
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:root)%>"
   lft: 1
-  rgt: 2
-  name: KLGB Paderborn
+  rgt: 50
+  name: KLJB Paderborn
   type: Group::Dioezesanverband
-  email: root@example.net
-  address: Ophovener Str. 79a
-  zip_code: 2843
+  email: buero@kljb-paderborn.de
+  address: Leostraße 21
+  zip_code: 33098
   town: Paderborn
-  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:root) %>
 
-# TODO add more groups
+dioezesanvorstand:
+  parent: root
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:root)%>"
+  lft: 6
+  rgt: 7
+  name: Diözesanvorstand
+  type: Group::DioezesanverbandVorstand
+  email: dwight@example.org
+  address: Brahmsweg 25b
+  zip_code: 5385
+  town: Tiaberg
+
+buero:
+  parent: root
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:root)%>"
+  lft: 4
+  rgt: 5
+  name: Büro
+  type: Group::DioezesanverbandBuero
+  email: edelmira@example.net
+  address: Straßburger Str. 4
+  zip_code: 6370
+  town: Nord Hennes
+
+ag_4:
+  parent: root
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:root)%>"
+  lft: 2
+  rgt: 3
+  name: AG
+  type: Group::DioezesanverbandAg
+  email: vito@example.com
+  address: Hitdorfer Str. 20a
+  zip_code: 7642
+  town: Neu Johann
+
+kontakte_5:
+  parent: root
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:root)%>"
+  lft: 8
+  rgt: 9
+  name: Kontakte
+  type: Group::DioezesanverbandKontakte
+  email: eura.lesch@example.org
+  address: Karl-Marx-Str. 42c
+  zip_code: 7913
+  town: Nord Ibrahimhagen
+
+nord:
+  parent: root
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:nord)%>"
+  lft: 10
+  rgt: 41
+  name: Nord
+  type: Group::Regionalverband
+  address: An der Foobar 23
+  zip_code: 76543
+  town: Hinterfüdlikon
+
+vorstand_7:
+  parent: nord
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:nord)%>"
+  lft: 39
+  rgt: 40
+  name: Vorstand
+  type: Group::RegionalverbandVorstand
+
+ag_8:
+  parent: nord
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:nord)%>"
+  lft: 11
+  rgt: 12
+  name: AG
+  type: Group::RegionalverbandAg
+
+
+kontakte_9:
+  parent: nord
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:nord)%>"
+  lft: 21
+  rgt: 22
+  name: Kontakte
+  type: Group::RegionalverbandKontakte
+
+sued:
+  parent: root
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:sued)%>"
+  lft: 42
+  rgt: 49
+  name: Süd
+  type: Group::Regionalverband
+
+vorstand_11:
+  parent: sued
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:sued)%>"
+  lft: 47
+  rgt: 48
+  name: Vorstand
+  type: Group::RegionalverbandVorstand
+
+ag_12:
+  parent: sued
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:sued)%>"
+  lft: 43
+  rgt: 44
+  name: AG
+  type: Group::RegionalverbandAg
+
+kontakte_13:
+  parent: sued
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:sued)%>"
+  lft: 45
+  rgt: 46
+  name: Kontakte
+  type: Group::RegionalverbandKontakte
+
+paderborn:
+  parent: nord
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:paderborn)%>"
+  lft: 23
+  rgt: 30
+  name: Paderborn
+  type: Group::Ortsgruppe
+
+vorstand_15:
+  parent: paderborn
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:paderborn)%>"
+  lft: 28
+  rgt: 29
+  name: Vorstand
+  type: Group::OrtsgruppeVorstand
+
+kontakte_16:
+  parent: paderborn
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:paderborn)%>"
+  lft: 24
+  rgt: 25
+  name: Kontakte
+  type: Group::OrtsgruppeKontakte
+
+leiterrunde_17:
+  parent: paderborn
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:paderborn)%>"
+  lft: 26
+  rgt: 27
+  name: Leiterrunde
+  type: Group::OrtsgruppeLeiterrunde
+
+bonn:
+  parent: nord
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:bonn)%>"
+  lft: 13
+  rgt: 20
+  name: Bonn
+  type: Group::Ortsgruppe
+
+vorstand_19:
+  parent: bonn
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:bonn)%>"
+  lft: 18
+  rgt: 19
+  name: Vorstand
+  type: Group::OrtsgruppeVorstand
+
+kontakte_20:
+  parent: bonn
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:bonn)%>"
+  lft: 14
+  rgt: 15
+  name: Kontakte
+  type: Group::OrtsgruppeKontakte
+
+leiterrunde_21:
+  parent: bonn
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:bonn)%>"
+  lft: 16
+  rgt: 17
+  name: Leiterrunde
+  type: Group::OrtsgruppeLeiterrunde
+
+st_augustin:
+  parent: nord
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:st_augustin)%>"
+  lft: 31
+  rgt: 38
+  name: St. Augustin
+  type: Group::Ortsgruppe
+
+vorstand_23:
+  parent: st_augustin
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:st_augustin)%>"
+  lft: 36
+  rgt: 37
+  name: Vorstand
+  type: Group::OrtsgruppeVorstand
+
+kontakte_24:
+  parent: st_augustin
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:st_augustin)%>"
+  lft: 32
+  rgt: 33
+  name: Kontakte
+  type: Group::OrtsgruppeKontakte
+
+leiterrunde_25:
+  parent: st_augustin
+  layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:st_augustin)%>"
+  lft: 34
+  rgt: 35
+  name: Leiterrunde
+  type: Group::OrtsgruppeLeiterrunde
