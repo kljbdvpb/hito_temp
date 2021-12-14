@@ -21,7 +21,7 @@ module Groups
     end
 
     def normal_members
-      @normal_members ||= all_members.count - discounted_members
+      @normal_members ||= all_members_of_layer.count - discounted_members
     end
 
     def discounted_members
@@ -30,16 +30,20 @@ module Groups
 
     private
 
-    def all_members
-      @group.people
+    def all_members_of_layer
+      Person.joins(:roles)
+            .where(roles: {
+                     group: @group.groups_in_same_layer,
+                     type: ['Group::Ortsgruppe::Mitglied']
+                   })
     end
 
     def members_with_siblings
-      all_members.where.not(family_key: nil).order(:family_key, :birthday)
+      all_members_of_layer.where.not(family_key: nil).order(:family_key, :birthday)
     end
 
     def underage_members_with_two_siblings
-      all_members
+      all_members_of_layer
         .group_by(&:family_key)
         .map { |_key, family| family.drop(2).select(&:underage?) }
         .flatten.compact

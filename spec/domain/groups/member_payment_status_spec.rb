@@ -95,4 +95,40 @@ describe Groups::MemberPaymentStatus do
         .and change(group, :members_discounted).to(0)
     end
   end
+
+  context 'counts only members' do
+    before do
+      10.times do
+        Fabricate('Group::Ortsgruppe::Mitglied', group: group)
+      end
+      2.times do
+        Fabricate('Group::Ortsgruppe::Foerdermitglied', group: group)
+      end
+      3.times do
+        Fabricate('Group::OrtsgruppeVorstand::Mitglied',
+                  group: group.children.find_by(type: 'Group::OrtsgruppeVorstand'))
+      end
+    end
+
+    it 'has assumptions' do
+      expect(group.people.count).to eq 12
+      all_members = Person.joins(:roles)
+        .where(roles: { group: group.layer_group.self_and_descendants })
+
+      expect(all_members.count).to eq 15
+
+      expect(
+        all_members.where({
+          roles: { type: ['Group::Ortsgruppe::Mitglied']}
+        }).count
+      ).to eq 10
+    end
+
+    it 'all member are normal members' do
+      expect do
+        subject.update
+      end.to change(group, :members_normal).to(10)
+        .and change(group, :members_discounted).to(0)
+    end
+  end
 end
