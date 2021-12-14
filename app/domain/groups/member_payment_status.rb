@@ -21,7 +21,7 @@ module Groups
     end
 
     def normal_members
-      @normal_members ||= 0
+      @normal_members ||= 10
     end
 
     def discounted_members

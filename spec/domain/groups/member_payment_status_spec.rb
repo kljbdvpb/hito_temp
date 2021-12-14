@@ -9,11 +9,32 @@ require 'spec_helper'
 
 describe Groups::MemberPaymentStatus do
   subject(:nooper) { described_class.new(non_layer) }
+  subject(:paderborn_status) { described_class.new(group) }
 
+  let(:group) { groups(:paderborn) }
   let(:non_layer) { groups(:paderborn_vorstand)}
 
   it 'does nothing if group is not a layer' do
     expect(non_layer).to_not be_layer
     expect(nooper.update).to be_falsey
+  end
+
+  context 'with a group that has members without siblings' do
+    before do
+      10.times do
+        Fabricate('Group::Ortsgruppe::Mitglied', group: group)
+      end
+    end
+
+    it 'has assumptions' do
+      expect(group.people.count).to eq 10
+    end
+
+    it 'all member are normal members' do
+      expect do
+        subject.update
+      end.to change(group, :members_normal).to(10)
+        .and change(group, :members_discounted).to(0)
+    end
   end
 end
