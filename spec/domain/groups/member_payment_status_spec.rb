@@ -37,4 +37,27 @@ describe Groups::MemberPaymentStatus do
         .and change(group, :members_discounted).to(0)
     end
   end
+
+  context 'with a group of only one family of 2 siblings' do
+    before do
+      tom = Fabricate(:person)
+      peter = Fabricate(:person)
+
+      Fabricate(:family_member, person: tom, other: peter, kind: 'sibling')
+
+      Fabricate('Group::Ortsgruppe::Mitglied', person: tom, group: group)
+      Fabricate('Group::Ortsgruppe::Mitglied', person: peter, group: group)
+    end
+
+    it 'has assumptions' do
+      expect(group.people.count).to eq 2
+    end
+
+    it 'all count as normal members' do
+      expect do
+        subject.update
+      end.to change(group, :members_normal).to(2)
+        .and change(group, :members_discounted).to(0)
+    end
+  end
 end

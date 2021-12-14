@@ -11,4 +11,8 @@ module Kljb::Person
   included do
     Person::PUBLIC_ATTRS -= [:nickname]
   end
+
+  def underage?
+    years.presence < 18
+  end
 end
