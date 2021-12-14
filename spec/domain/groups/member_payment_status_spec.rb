@@ -174,4 +174,30 @@ describe Groups::MemberPaymentStatus do
       end.to change(bonn, :members_discounted).to(1)
     end
   end
+
+  describe 'cutoff_date' do
+    it 'is the last day of august' do
+      travel_to '2021-12-14' do
+        expect(described_class.cutoff_date).to eq Date.parse('2021-08-31')
+      end
+    end
+
+    it 'is never in the future' do
+      travel_to '2021-08-30' do
+        expect(described_class.cutoff_date).to eq Date.parse('2020-08-31')
+      end
+    end
+
+    it 'may be today' do
+      travel_to '2021-08-31' do
+        expect(described_class.cutoff_date).to eq Date.parse('2021-08-31')
+      end
+    end
+
+    it 'may be in the past' do
+      travel_to '2021-09-01' do
+        expect(described_class.cutoff_date).to eq Date.parse('2021-08-31')
+      end
+    end
+  end
 end

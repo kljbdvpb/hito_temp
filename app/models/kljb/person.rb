@@ -13,6 +13,6 @@ module Kljb::Person
   end
 
   def underage?
-    years.presence < 18
+    years(Groups::MemberPaymentStatus.cutoff_date).presence < 18
   end
 end

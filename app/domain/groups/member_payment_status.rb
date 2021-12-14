@@ -7,6 +7,21 @@
 
 module Groups
   class MemberPaymentStatus
+    AGE_CUTOFF_DATE = [8, 31].freeze
+
+    class << self
+      def cutoff_date
+        now = Date.current
+        year = if now >= Date.new(now.year, *AGE_CUTOFF_DATE)
+                 now.year
+               else
+                 now.year - 1
+               end
+
+        Date.new(year, *AGE_CUTOFF_DATE)
+      end
+    end
+
     def initialize(group)
       @group = group
     end
