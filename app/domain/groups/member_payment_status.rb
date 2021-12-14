@@ -39,14 +39,24 @@ module Groups
     end
 
     def members_with_siblings
-      all_members_of_layer.where.not(family_key: nil).order(:family_key, :birthday)
+      all_members_of_layer.where.not(family_key: nil).order(:family_key)
     end
 
-    def underage_members_with_two_siblings
-      all_members_of_layer
+    def complete_families(keys)
+      Person.where(family_key: keys).order(:family_key, :birthday)
+    end
+
+    def underage_people_with_two_siblings(keys)
+      complete_families(keys)
         .group_by(&:family_key)
         .map { |_key, family| family.drop(2).select(&:underage?) }
         .flatten.compact
+    end
+
+    def underage_members_with_two_siblings
+      keys = members_with_siblings.uniq.pluck(:family_key)
+
+      underage_people_with_two_siblings(keys) & all_members_of_layer
     end
   end
 end

@@ -131,4 +131,47 @@ describe Groups::MemberPaymentStatus do
         .and change(group, :members_discounted).to(0)
     end
   end
+
+  context 'with siblings in other groups' do
+    let(:bonn) { groups(:bonn) }
+    let(:paderborn) { group }
+    subject(:bonn_status) { described_class.new(bonn)}
+
+    before do
+      tom   = Fabricate(:person, birthday: 20.years.ago, nickname: 'tom')
+      olaf  = Fabricate(:person, birthday: 15.years.ago, nickname: 'olaf')
+      peter = Fabricate(:person, birthday: 13.years.ago, nickname: 'peter')
+
+      Fabricate(:family_member, person: tom, other: olaf, kind: 'sibling')
+      Fabricate(:family_member, person: tom, other: peter, kind: 'sibling')
+
+      Fabricate('Group::Ortsgruppe::Mitglied', person: tom, group: paderborn)
+      Fabricate('Group::Ortsgruppe::Mitglied', person: olaf, group: paderborn)
+      Fabricate('Group::Ortsgruppe::Mitglied', person: peter, group: bonn)
+
+      [tom, olaf, peter].each(&:reload)
+    end
+
+    it 'has 2 and 1 members in total' do
+      expect do
+        paderborn_status.update
+      end.to change { paderborn.members_normal.to_i + paderborn.members_discounted.to_i }.to(2)
+
+      expect do
+        bonn_status.update
+      end.to change { bonn.members_normal.to_i + bonn.members_discounted.to_i }.to(1)
+    end
+
+    it 'the 2 oldest siblings count as normal members' do
+      expect do
+        paderborn_status.update
+      end.to change(paderborn, :members_normal).to(2)
+    end
+
+    it 'the 1 youngest siblings counts as discounted member in its group' do
+      expect do
+        bonn_status.update
+      end.to change(bonn, :members_discounted).to(1)
+    end
+  end
 end
