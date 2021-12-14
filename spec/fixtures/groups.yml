@@ -139,7 +139,7 @@ paderborn:
   name: Paderborn
   type: Group::Ortsgruppe
 
-vorstand_15:
+paderborn_vorstand:
   parent: paderborn
   layer_group_id: "<%=ActiveRecord::FixtureSet.identify(:paderborn)%>"
   lft: 28
