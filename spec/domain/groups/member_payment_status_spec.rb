@@ -38,6 +38,41 @@ describe Groups::MemberPaymentStatus do
     end
   end
 
+  context 'with a group of only one family of 3 siblings' do
+    before do
+      tom   = Fabricate(:person, birthday: 20.years.ago, nickname: 'tom')
+      olaf  = Fabricate(:person, birthday: 15.years.ago, nickname: 'olaf')
+      peter = Fabricate(:person, birthday: 13.years.ago, nickname: 'peter')
+
+      Fabricate(:family_member, person: tom, other: olaf, kind: 'sibling')
+      Fabricate(:family_member, person: tom, other: peter, kind: 'sibling')
+
+      Fabricate('Group::Ortsgruppe::Mitglied', person: tom, group: group)
+      Fabricate('Group::Ortsgruppe::Mitglied', person: olaf, group: group)
+      Fabricate('Group::Ortsgruppe::Mitglied', person: peter, group: group)
+
+      [tom, olaf, peter].each(&:reload)
+    end
+
+    it 'has 3 members in total' do
+      expect do
+        subject.update
+      end.to change { group.members_normal.to_i + group.members_discounted.to_i }.to(3)
+    end
+
+    it 'the 2 oldest siblings count as normal members' do
+      expect do
+        subject.update
+      end.to change(group, :members_normal).to(2)
+    end
+
+    it 'the 1 youngest siblings counts as discounted member' do
+      expect do
+        subject.update
+      end.to change(group, :members_discounted).to(1)
+    end
+  end
+
   context 'with a group of only one family of 2 siblings' do
     before do
       tom = Fabricate(:person)
