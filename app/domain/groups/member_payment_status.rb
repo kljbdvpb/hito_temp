@@ -64,7 +64,9 @@ module Groups
     def underage_people_with_two_siblings(keys)
       complete_families(keys)
         .group_by(&:family_key)
-        .map { |_key, family| family.drop(2).select(&:underage?) }
+        .map { |_key, family| family.drop(2).select { |person| 
+          person.underage?(Groups::MemberPaymentStatus.cutoff_date)
+        } }
         .flatten.compact
     end
 

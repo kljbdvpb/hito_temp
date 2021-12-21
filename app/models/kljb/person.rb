@@ -12,7 +12,9 @@ module Kljb::Person
     Person::PUBLIC_ATTRS -= [:nickname]
   end
 
-  def underage?
-    years(Groups::MemberPaymentStatus.cutoff_date).presence < 18
+  def underage?(cutoff_date = Time.zone.now.to_date)
+    return false unless birthday?
+
+    years(cutoff_date).presence < 18
   end
 end
