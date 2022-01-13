@@ -29,6 +29,7 @@ phone_number:
 
 countries:
   prioritized:
+    - --
     - DE
     - AT
     - CH
