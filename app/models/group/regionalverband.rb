@@ -11,7 +11,6 @@ class Group::Regionalverband < ::Group
 
   self.default_children = [
     Group::RegionalverbandVorstand,
-    Group::RegionalverbandAg,
     Group::RegionalverbandKontakte
   ]
 

@@ -12,7 +12,6 @@ class Group::Dioezesanverband < ::Group
   self.default_children = [
     Group::DioezesanverbandVorstand,
     Group::DioezesanverbandBuero,
-    Group::DioezesanverbandAg,
     Group::DioezesanverbandKontakte
   ]
 
