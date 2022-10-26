@@ -6,20 +6,30 @@
 # Settings relevant for the hitobito_kljb wagon
 # Overrides settings from the main application
 application:
-  name: KLJB Paderborn
+  name: KLJB im Erzbistum Paderborn
   logo:
     image: logo.png
     width: 220
     height: 80
   languages:
     de: Deutsch
-
+  footer:
+    links:
+      de:
+        "Informationen und Hilfe": https://kljb-paderborn.de/zmv/
+        "Datenschutz": https://kljb-paderborn.de/datenschutz/
 # The person with this email has root access to everything
 # This person should only be used by the operators of the application,
 # not the customers.
 # Initially, a password reset token may be mailed from the application
 # to this address to set a password.
-root_email: hitobito-kljb@puzzle.ch
+root_email: datenschutz@kljb-paderborn.de
+
+impersonate:
+  notify: false
+
+email:
+  sender:  <%= "KLIB Mitgliederdatenbank <noreply@post.kljb-paderborn.de>" %>
 
 currency:
   unit: EUR
@@ -40,3 +50,5 @@ countries:
 addresses:
   imported_countries:
     - DE
+
+

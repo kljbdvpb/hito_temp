@@ -9,7 +9,7 @@ module Kljb::Person
   extend ActiveSupport::Concern
 
   included do
-    Person::PUBLIC_ATTRS -= [:nickname]
+    Person::PUBLIC_ATTRS.delete(:nickname)
   end
 
   def underage?(cutoff_date = Time.zone.now.to_date)

@@ -1,0 +1,16 @@
+.contactable.well
+  .profil-big.pull-right
+    = image_tag(person.picture_url, size: '72x72')
+  
+
+  = render 'contactable/contact_data',
+           contactable: person,
+           postal: false,
+           only_public: only_public
+
+  - if person.household_people.present?
+    = render_extensions 'household_attrs'
+    %div
+      %small= t('.lives_in_household_with')
+      %br
+      = render_household(person)
